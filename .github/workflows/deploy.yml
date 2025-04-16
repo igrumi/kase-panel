@@ -1,0 +1,45 @@
+name: 🚀 Deploy to VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Actualizar servidor
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy en VPS
+        run: |
+          ssh usergit@${{ secrets.VPS_IP }} "
+            cd /home/usergit/mern-panel &&
+            git pull &&
+            docker compose down &&
+            docker compose up -d --build
+          "
+
+      - name: ✅ Notificación de éxito en Discord
+        if: success()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{"content":"✅ Despliegue completado con éxito en la VPS."}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}
+
+      - name: ❌ Notificación de fallo en Discord
+        if: failure()
+        run: |
+          curl -X POST -H "Content-Type: application/json" \
+          -d '{"content":"🚨 Falló el despliegue en la VPS. Revisa los logs de GitHub Actions."}' \
+          ${{ secrets.DISCORD_WEBHOOK_URL }}

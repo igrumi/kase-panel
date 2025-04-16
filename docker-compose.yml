@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ./docker/Dockerfile.back
+    container_name: kase_backend
+    ports:
+      - "5000:5000"
+    environment:
+      - MONGO_URL=mongodb://mongo:27017/paneldb
+    depends_on:
+      - mongo
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./docker/Dockerfile.front
+
+    container_name: kase_frontend
+    ports:
+      - "3000:3000"
+
+  mongo:
+    image: mongo
+    container_name: kase_mongo
+    volumes:
+      - mongo_data:/data/db
+
+  nginx:
+    image: nginx:latest
+    container_name: kase_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./frontend/dist:/usr/share/nginx/html
+      - ./ssl/domain.cert.pem:/etc/ssl/certs/domain.cert.pem
+      - ./ssl/private.key.pem:/etc/ssl/private/private.key.pem
+    depends_on:
+      - frontend
+      - backend
+
+volumes:
+  mongo_data:
