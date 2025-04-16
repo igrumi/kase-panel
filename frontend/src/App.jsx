@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div>
-      <h1>Panel MERN</h1>
+      <h1>Panel KASE</h1>
       <p>{msg}</p>
     </div>
   );

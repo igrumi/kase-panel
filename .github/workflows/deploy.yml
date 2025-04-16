@@ -24,7 +24,7 @@ jobs:
       - name: Deploy en VPS
         run: |
           ssh usergit@${{ secrets.VPS_IP }} "
-            cd /home/usergit/mern-panel &&
+            cd /home/usergit/kase-panel &&
             git pull &&
             docker compose down &&
             docker compose up -d --build
