@@ -26,6 +26,10 @@ jobs:
           ssh usergit@${{ secrets.VPS_IP }} "
             cd /home/usergit/kase-panel &&
             git pull &&
+            cd frontend &&
+            npm install &&
+            npm run build &&
+            cd .. &&
             docker compose down &&
             docker compose up -d --build
           "
