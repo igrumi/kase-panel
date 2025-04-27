@@ -38,12 +38,12 @@ jobs:
         if: success()
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d '{"content":"✅ Despliegue completado con éxito en la VPS."}' \
+          -d '{"content":"✅ <@146187721252143104> Despliegue completado con éxito en la VPS."}' \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
 
       - name: ❌ Notificación de fallo en Discord
         if: failure()
         run: |
           curl -X POST -H "Content-Type: application/json" \
-          -d '{"content":"🚨 Falló el despliegue en la VPS. Revisa los logs de GitHub Actions."}' \
+          -d '{"content":"🚨 <@146187721252143104> Falló el despliegue en la VPS. Revisa los logs de GitHub Actions."}' \
           ${{ secrets.DISCORD_WEBHOOK_URL }}
