@@ -5,10 +5,9 @@ import ProjectCard from "../components/ProjectCard";
 
 export default function Home() {
   return (
-    <div className="bg-romance min-h-screen pt-10">
+    <div id="home" className="bg-romance min-h-screen pt-10">
       {/* Hero */}
       <section
-        id="home"
         className="flex flex-col items-center text-center py-20 px-6 bg-romance"
       >
         <img
