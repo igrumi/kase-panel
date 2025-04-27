@@ -1,20 +1,5 @@
-import { useEffect, useState } from 'react';
+import Router from "./router";
 
-function App() {
-  const [msg, setMsg] = useState('');
-
-  useEffect(() => {
-    fetch('/api/hello')
-      .then(res => res.json())
-      .then(data => setMsg(data.message));
-  }, []);
-
-  return (
-    <div>
-      <h1>Panel KASE</h1>
-      <p>{msg}</p>
-    </div>
-  );
+export default function App() {
+  return <Router />;
 }
-
-export default App;
