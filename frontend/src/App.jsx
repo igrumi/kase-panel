@@ -1,5 +1,5 @@
-import Router from "./router";
+import ProtectedRoute from "./router";
 
 export default function App() {
-  return <Router />;
+  return <ProtectedRoute />;
 }
