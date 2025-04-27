@@ -5,7 +5,7 @@ export default function MainLayout({ children }) {
   return (
     <>
       <Navbar />
-      <main className="pt-20">{children}</main> {/* Agregamos padding-top para que no tape el navbar fijo */}
+      <main>{children}</main> {/* Agregamos padding-top para que no tape el navbar fijo */}
       <Footer />
     </>
   );
